@@ -12,6 +12,8 @@ EventCatalog_Microservice
  2) Users can be added to the database and their credentials can be maintained.
  3) User is allowed to create a new event,add an image to the event  and that event gets updated in the database.
  4) User can access all the events stored in the database. Also the user can filter events based on indvidual properties of the event.
+ 
+ Demonstration Video: https://www.youtube.com/watch?v=JbhoVmuC4yU
 
  Contributors:
     Khushboo Thakur
