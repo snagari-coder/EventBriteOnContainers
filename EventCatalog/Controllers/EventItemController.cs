@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using EventCatalog.Data;
 using EventCatalog.Domain;
@@ -57,6 +58,18 @@ namespace EventCatalog.Controllers
                 return Problem(result);
         }
 
+        [HttpPost]
+        
+        public IActionResult PostEventProperty(EventItem value)
+        {
+            var test = value.Id;
+            var selectedEvent = (from e in _context.EventItems.Where(e => e.Id == test) select e).Single();
+            selectedEvent.Favorite = 1;
+
+            _context.Update(selectedEvent);
+            _context.SaveChanges();
+            return Ok(selectedEvent);
+        }
 
         [HttpGet("[action]")]
 
@@ -65,6 +78,40 @@ namespace EventCatalog.Controllers
           [FromQuery]int pageIndex = 0,
 
           [FromQuery]int pageSize = 3)
+
+        {
+            var itemscount = await _context.EventItems.LongCountAsync();
+            var items = await _context.EventItems
+
+                            .OrderBy(c => c.Event_Name)
+
+                            .Skip(pageIndex * pageSize)
+
+                            .Take(pageSize)
+
+                            .ToListAsync();
+
+            items = ChangePictureUrl(items);
+
+            var model = new PaginatedItemsViewModel<EventItem>
+            {
+                PageIndex = pageIndex,
+                PageSize = items.Count,
+                Count = itemscount,
+                Data = items
+            };
+
+            return Ok(model);
+
+        }
+
+        [HttpGet("[action]")]
+
+        public async Task<IActionResult> GetItems(
+
+          [FromQuery] int pageIndex = 0,
+
+          [FromQuery] int pageSize = 3)
 
         {
             var itemscount = await _context.EventItems.LongCountAsync();
@@ -105,6 +152,13 @@ namespace EventCatalog.Controllers
         {
             var audiences = await _context.EventAudiences.ToListAsync();
             return Ok(audiences);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> EventCategories()
+        {
+            var categories = await _context.EventCategories.ToListAsync();
+            return Ok(categories);
         }
 
         [HttpGet("[action]")]

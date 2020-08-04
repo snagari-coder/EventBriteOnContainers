@@ -33,7 +33,7 @@ namespace EventCatalog.Data
          
         public DbSet<EventItem> EventItems { get; set; }
 
-        public DbSet<EventUserInfo> EventUserInfos { get; set; }
+       // public DbSet<EventUserInfo> EventUserInfos { get; set; }
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -124,26 +124,8 @@ namespace EventCatalog.Data
                 .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<EventUserInfo>(e =>
-            {
-                e.ToTable("EventUserInfos");
-
-                e.Property(E => E.UserName)
-                .IsRequired()
-                .HasMaxLength(25);
-
-
-                e.Property(E => E.Email_Id)
-                .IsRequired()
-                .HasMaxLength(25);
-
-                e.Property(E => E.Password)
-                .IsRequired()
-                .HasMaxLength(10);
-               
-
-            });
- ;
+            
+ 
 
             modelBuilder.Entity<EventItem>(e =>
             {
@@ -159,10 +141,12 @@ namespace EventCatalog.Data
                 e.Property(E => E.Event_Desc)
                .IsRequired()
                .HasMaxLength(500);
-
+               
                 e.Property(E => E.Event_Capacity)
                 .IsRequired();
-             
+
+                e.Property(E => E.Favorite)
+                .HasColumnType("integer");
 
                 e.Property(E => E.Event_Start_Time)
                 .IsRequired();
@@ -203,9 +187,7 @@ namespace EventCatalog.Data
                 .WithMany()
                 .HasForeignKey(e => e.Event_ZipCodeId);
 
-                e.HasOne(e => e.Event_Organiser)
-                .WithMany()
-                .HasForeignKey(e => e.Event_UserId);
+                
 
                 e.HasOne(e => e.Event_Audience)
                 .WithMany()

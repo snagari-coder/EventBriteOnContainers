@@ -143,10 +143,13 @@ namespace EventCatalog.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Event_UserId")
-                        .HasColumnType("nvarchar(25)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Event_ZipCodeId")
                         .HasColumnType("int");
+
+                    b.Property<int>("Favorite")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -161,8 +164,6 @@ namespace EventCatalog.Migrations
                     b.HasIndex("Event_LanguageId");
 
                     b.HasIndex("Event_LocationId");
-
-                    b.HasIndex("Event_UserId");
 
                     b.HasIndex("Event_ZipCodeId");
 
@@ -223,27 +224,6 @@ namespace EventCatalog.Migrations
                     b.ToTable("EventLocations");
                 });
 
-            modelBuilder.Entity("EventCatalog.Domain.EventUserInfo", b =>
-                {
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("Email_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
-
-                    b.HasKey("UserName");
-
-                    b.ToTable("EventUserInfos");
-                });
-
             modelBuilder.Entity("EventCatalog.Domain.EventZipCode", b =>
                 {
                     b.Property<int>("Id")
@@ -299,10 +279,6 @@ namespace EventCatalog.Migrations
                         .HasForeignKey("Event_LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EventCatalog.Domain.EventUserInfo", "Event_Organiser")
-                        .WithMany()
-                        .HasForeignKey("Event_UserId");
 
                     b.HasOne("EventCatalog.Domain.EventZipCode", "Event_ZipCode")
                         .WithMany()

@@ -361,25 +361,7 @@ namespace EventCatalog.Data
                     throw new ArgumentNullException(String.Format("Inp_Event_ZipCode is null"));
                 }
 
-                if (eventInput.Inp_Event_User != null)
-                {
-                    var user = catalogContext.EventUserInfos
-                  .Where(b => b.UserName == eventInput.Inp_Event_User)
-                  .FirstOrDefault();
-                    if(user==null)
-                    {
-                        throw new ArgumentNullException(String.Format("Inp_Event_user not found"));
-                    }
-                    eventItem.Event_UserId = user.UserName;
-                }
-                if(eventItem.Event_UserId==null|| eventInput.Inp_Event_User == null)
-                {
-                    throw new ArgumentNullException(String.Format("Inp_Event_user is null"));
-                }
-
-
-
-               
+                              
 
                 await catalogContext.EventItems.AddAsync(eventItem);
                
@@ -514,10 +496,10 @@ namespace EventCatalog.Data
             }
             
         }
-            
-
 
         
+
+
 
     }
 }

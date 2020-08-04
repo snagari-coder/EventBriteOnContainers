@@ -16,7 +16,8 @@ namespace EventCatalog.Domain
         public string Event_Desc { get; set; }
 
         public int Event_Capacity { get; set; }
-
+        
+        public int Favorite { get; set; }
 
         public DateTime Event_Start_Time { get; set; }
 
@@ -54,7 +55,7 @@ namespace EventCatalog.Domain
 
         public string Event_UserId { get; set; }
 
-        public EventUserInfo Event_Organiser { get; set; }
+        //public EventUserInfo Event_Organiser { get; set; }
         
         public int Event_AudienceId{ get; set; }
 

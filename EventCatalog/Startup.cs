@@ -27,7 +27,16 @@ namespace EventCatalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+            var databaseServer = Configuration["DatabaseServer"];
+            var databaseName = Configuration["DatabaseName"];
+            var databaseUser = Configuration["DatabaseUser"];
+            var password = Configuration["DatabasePassword"];
+            var connectionString = $"Server={databaseServer};Database={databaseName};User Id={databaseUser}; Password={password}";
+
+            services.AddDbContext<EventCatalogContext>(options =>
+            options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+
             services.AddDbContext<EventCatalogContext>(options =>
             options.UseSqlServer(Configuration["ConnectionString"]),ServiceLifetime.Transient);
             

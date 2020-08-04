@@ -1,0 +1,48 @@
+﻿@model EventWebMvc.Models.EventItem
+
+
+
+
+    <form asp-controller="EventCatalog" asp-action="AddToFavorite">
+        <img class="esh-catalog-thumbnail" src="@Model.Event_Pictureurl" />
+        <input class="esh-catalog-button" type="submit" value="[ ADD TO CART ]" />
+        <div>
+        @*<input type="submit" value="LIKE" />*@
+
+        @*<button type="button" class="btn btn-success" onclick="@AddLikeCount()" value="FAVORITE" />*@
+        <button style="font-size:24px;color:red">FAVORITE <i class="fa fa-heart"></i></button>
+        @*<span>@Model.Id</span>*@
+        @functions
+        {
+            int count = 0;
+
+            int AddLikeCount()
+            {
+                count = count + 1;
+                return count;
+            }
+        }
+
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.Event_Name</span>
+        </div>
+        <div class="esh-catalog-price">
+            <span>@Model.Event_Price.ToString("N2")</span>
+        </div>
+        <input type="hidden" asp-for="@Model.Event_Location" name="location" />
+        <input type="hidden" asp-for="@Model.Event_LocationId" name="locationId" />
+        <input type="hidden" asp-for="@Model.Event_Category" name="category" />
+        <input type="hidden" asp-for="@Model.Event_CategoryId" name="categoryId" />
+        <input type="hidden" asp-for="@Model.Event_Desc" name="description" />
+        <input type="hidden" asp-for="@Model.Event_Capacity" name="capacity" />
+        <input type="hidden" asp-for="@Model.Event_Start_Time" name="startTime" />
+        <input type="hidden" asp-for="@Model.Event_End_Time" name="endTime" />
+        <input type="hidden" asp-for="@Model.Event_Online_Link" name="onlineLink" />
+        <input type="hidden" asp-for="@Model.Event_Address" name="address" />
+        <input type="hidden" asp-for="@Model.Id" name="id" />
+        <input type="hidden" asp-for="@Model.Event_Language" name="name" />
+        <input type="hidden" asp-for="@Model.Event_LanguageId" name="pictureUrl" />
+        <input type="hidden" asp-for="@Model.Event_Kind" name="kind" />
+        <input type="hidden" asp-for="@Model.Event_KindId" name="kindId" />
+    </form>
